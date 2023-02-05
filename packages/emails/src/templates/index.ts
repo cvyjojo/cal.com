@@ -22,3 +22,4 @@ export { TeamInviteEmail } from "./TeamInviteEmail";
 export { BrokenIntegrationEmail } from "./BrokenIntegrationEmail";
 export { OrganizerAttendeeCancelledSeatEmail } from "./OrganizerAttendeeCancelledSeatEmail";
 export * from "@calcom/app-store/routing-forms/emails/components";
+export { AttendeeDailyVideoDownloadRecordingEmail } from "./AttendeeDailyVideoDownloadRecordingEmail";

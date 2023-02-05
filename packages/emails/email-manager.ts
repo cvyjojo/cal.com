@@ -9,6 +9,7 @@ import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 import AttendeeAwaitingPaymentEmail from "./templates/attendee-awaiting-payment-email";
 import AttendeeCancelledEmail from "./templates/attendee-cancelled-email";
 import AttendeeCancelledSeatEmail from "./templates/attendee-cancelled-seat-email";
+import AttendeeDailyVideoDownloadRecordingEmail from "./templates/attendee-daily-video-download-recording-email";
 import AttendeeDeclinedEmail from "./templates/attendee-declined-email";
 import AttendeeLocationChangeEmail from "./templates/attendee-location-change-email";
 import AttendeeRequestEmail from "./templates/attendee-request-email";
@@ -284,4 +285,26 @@ export const sendDisabledAppEmail = async ({
   eventTypeId?: number;
 }) => {
   await sendEmail(() => new DisabledAppEmail(email, appName, appType, t, title, eventTypeId));
+};
+
+export const sendDailyVideoRecordingEmails = async (calEvent: CalendarEvent, downloadLink: string) => {
+  const emailsToSend: Promise<unknown>[] = [];
+
+  emailsToSend.push(
+    ...calEvent.attendees.map((attendee) => {
+      return new Promise((resolve, reject) => {
+        try {
+          const recordingEmail = new AttendeeDailyVideoDownloadRecordingEmail(
+            calEvent,
+            attendee,
+            downloadLink
+          );
+          resolve(recordingEmail.sendEmail());
+        } catch (e) {
+          reject(console.error("AttendeeDailyVideoDownloadRecordingEmail.sendEmail failed", e));
+        }
+      });
+    })
+  );
+  await Promise.all(emailsToSend);
 };
