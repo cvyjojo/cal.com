@@ -155,11 +155,6 @@ const BookingFields = ({
               hidden = true;
             }
           }
-
-          // Mark location as required if it not hidden
-          if (field.name === "location" && field.options.length && !hidden) {
-            field.required = true;
-          }
         }
 
         const label = noLabel ? "" : field.label || t(field.defaultLabel || "");
