@@ -237,7 +237,7 @@ function BookingListItem(booking: BookingItemProps) {
   };
 
   const title = booking.title;
-  const showRecordingsButtons = booking?.isRecording && isPast && isConfirmed;
+  const showRecordingsButtons = booking?.isRecorded && isPast && isConfirmed;
   return (
     <>
       <RescheduleDialog
